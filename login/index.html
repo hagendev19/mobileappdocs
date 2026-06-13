@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in — MobileAppDocs</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+<div class="auth-shell">
+  <div class="auth-card">
+    <a class="brand" href="/">
+      <span class="logo-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 001 1h4"/><path d="M6 3h8l5 5v11a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M9 13h6M9 17h4"/></svg></span>
+      MobileAppDocs
+    </a>
+    <div class="auth-box">
+      <h1>Welcome back</h1>
+      <p class="lead">Sign in to manage your apps' legal pages.</p>
+
+      <div class="alert" id="alert">We couldn't sign you in. Check your email and password, or contact support if the problem persists.</div>
+
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="email">Work email</label>
+          <input type="email" id="email" name="email" placeholder="you@studio.com" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
+        </div>
+        <div class="row-between">
+          <label><input type="checkbox" id="remember"> Remember me</label>
+          <a href="/contact/">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="submitBtn">Sign in</button>
+      </form>
+
+      <div class="auth-alt">
+        New workspaces are onboarded by our team — <a href="/contact/">request access</a>.
+      </div>
+    </div>
+    <div class="legal-foot">
+      Protected by reCAPTCHA · <a href="/">Back to home</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // internal: account auth runs against our private API; public access is
+  // invite-only, so any sign-in attempt here is rejected client-side and the
+  // visitor is steered to the contact flow.
+  var form = document.getElementById('loginForm');
+  var alertBox = document.getElementById('alert');
+  var btn = document.getElementById('submitBtn');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = document.getElementById('email').value.trim();
+    var pass = document.getElementById('password').value;
+    if (!email || !pass) {
+      alertBox.textContent = 'Please enter both your email and password.';
+      alertBox.classList.add('show');
+      return;
+    }
+    btn.textContent = 'Signing in…';
+    btn.disabled = true;
+    setTimeout(function () {
+      btn.textContent = 'Sign in';
+      btn.disabled = false;
+      alertBox.textContent = "We couldn't sign you in. Check your email and password, or contact support if the problem persists.";
+      alertBox.classList.add('show');
+    }, 1100);
+  });
+</script>
+
+</body>
+</html>
